@@ -12,8 +12,15 @@ pip install -r requirements.txt
 ```
 2) In order to compute the Fréchet Audio Distance (FAD) download and install google AI repo following the instructions [here](https://github.com/google-research/google-research/tree/master/frechet_audio_distance)
 
+# Extract timbral features
+To extract timbral features for your dataset, as mentioned in section 3.1.2 of the [DrumGAN paper](https://arxiv.org/pdf/2008.12073), run the following command. This will mounts the current directory `pwd` in the virtual `tmp` directory inside the AudioCommons Audio Extractor Docker image. The audio dataset folder and the output folder should be in this current directory. The output folder is also written in `tmp`, and therefore appears in the current directory.
+```docker run -it --rm -v `pwd`:/tmp mtgupf/ac-audio-extractor:v3 -i /tmp/{audio dataset folder} -o /tmp/{output folder} -t --format json```
+
 # The dataset
 We train our model on a private, non-publicly available dataset containing 300k sounds of drum sounds equally distributed across kicks, snares and cymbals. This repo contains code for training a model on your own data. You will have to create a data loader, specific to the structure of your own dataset. 
+
+docker run -it --rm -v `pwd`:/tmp mtgupf/ac-audio-extractor:v3 -i /tmp/audio.wav -o /tmp/analysis.json -st
+
 # Training a new model
 Train a new model from the module's root folder by executing:
 ```
