@@ -5,11 +5,11 @@ import sys
 import pickle
 import requests
 
-from utils.utils import get_date, mkdir_in_path, read_json, list_files_abs_path, get_filename, save_json, walk_files_abs_path
+from utils.utils import get_date, mkdir_in_path, read_json, list_files_abs_path, get_filename, save_json
 from random import shuffle
 from tqdm import trange, tqdm
 
-from .base_db import get_base_db, get_hash_dict
+from ..db_extractors.base_db import get_base_db, get_hash_dict
 
 # from pydub import AudioSegment
 # from mutagen.mp3 import MP3
@@ -55,7 +55,7 @@ def extract(path: str,
 
     description = get_base_db(dbname, __VERSION__)
 
-    wav_files = walk_files_abs_path(path, _format)
+    wav_files = list_files_abs_path(path, _format)
 
     if len(wav_files) == 0:
         print('No wav files found!')

@@ -5,7 +5,7 @@ import sys
 import pickle
 import requests
 
-from utils.utils import get_date, mkdir_in_path, read_json, list_files_abs_path, get_filename, save_json, walk_files_abs_path
+from utils.utils import get_date, mkdir_in_path, read_json, list_files_abs_path, get_filename, save_json
 from random import shuffle
 from tqdm import trange, tqdm
 
@@ -29,7 +29,16 @@ criteria_keys = ['size', 'format']
 def extract(path: str,
             dbname: str='default', 
             criteria: dict={}):
-
+    """
+    Arguments:
+    path: The directory where the audio files are located
+    dbname: The name of the database, defaulting to 'default'
+    criteria: A dictionary specifying filtering criteria for the extraction process, defaulting to an empty dictionary
+    
+    Returns:
+    data: A list of file paths to the extracted audio files
+    description: A dictionary containing metadata about the extraction process
+    """
     if criteria != {}:
         assert all(k in criteria_keys for k in criteria),\
             "Filter criteria not understood"
@@ -55,7 +64,7 @@ def extract(path: str,
 
     description = get_base_db(dbname, __VERSION__)
 
-    wav_files = walk_files_abs_path(path, _format)
+    wav_files = list_files_abs_path(path, _format)
 
     if len(wav_files) == 0:
         print('No wav files found!')
@@ -69,6 +78,7 @@ def extract(path: str,
     description['size'] = len(data)
     description['hash'] = extraction_hash
 
+    #create data.pt and extraction.json
     with open(data_file, 'wb') as fp:
         pickle.dump((data, description), fp)
     save_json(description, desc_file)

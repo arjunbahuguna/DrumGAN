@@ -124,7 +124,7 @@ if __name__ == "__main__":
     loader_config = config['loader_config']
     dbname = loader_config.get('dbname', args.dataset)
 
-    loader_module = get_data_loader(dbname)
+    loader_module = get_data_loader(dbname) #instance of class CSLDrums, PIDrums, SimpleLoader, or other
 
     loader = loader_module(name=dbname + '_' + transform_config['transform'],
                            output_path=checkpoint_dir, 
