@@ -171,12 +171,13 @@ class DataLoader(ABC, data.Dataset):
         self.data, self.metadata = zip(*combined)
 
 
-    def index_to_labels(self, batch, transpose=False):
+    def index_to_labels(self, batch, calling_fx=None, transpose=False):
         label_batch = []
+
         for j, b in enumerate(batch):
             shift = 0
             labels = []
-            for i, att_dict in enumerate(self.header['attributes'].values()):
+            for i, att_dict in enumerate(self.header['attributes'].values()): # header['attribute'].values is {audio-commons children} and {instrument children}              
                 if att_dict['type'] == str(float):
                     labels += [b[shift: shift + len(att_dict['values'])].tolist()]
                     shift += len(att_dict['values'])
@@ -184,8 +185,8 @@ class DataLoader(ABC, data.Dataset):
                     bl = b[shift: shift + len(att_dict['values'])]
                     labels += [bl.tolist()]
                     # labels += [att_dict['values'][k] for k in np.argwhere(bl==1)[0]]                   
-                    shift += len(att_dict['values'])           
-                else:
+                    shift += len(att_dict['values'])
+                else:           
                     assert b[shift] % 1 == 0, "Error in attribute orders"
                     labels += [att_dict['values'][int(b[shift])]]
                     shift += 1

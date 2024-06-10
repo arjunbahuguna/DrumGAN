@@ -34,7 +34,7 @@ if __name__ == "__main__":
                         type=str, dest="name", 
                         default=f"default_{datetime.now().strftime('%y_%m_%d')}")
     parser.add_argument('-d', '--dataset',type=str, dest="dataset", default=f"nsynth", 
-                        help="Dataset name. Availabel: nsynth, mtg-drums, csl-drums, youtube-pianos")
+                        help="Dataset name. Availabel: nsynth, mtg-drums, csl-drums, youtube-pianos, pi-drums")
     
     parser.add_argument('-o', '--output-path', help='Output directory',
                         type=str, dest="output_path", default='output_networks')

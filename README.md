@@ -1,8 +1,11 @@
 # DrumGAN: Synthesis of Drum Sounds With Timbral Feature Conditioning Using Generative Adversarial Networks
-This repo contains code for running DrumGAN, a Generative Adversarial Network that synthesizes drum sounds offering control over prcetpual features. You can find details about the specific architecture and the experiment in our ISMIR [paper](). Some of the codes are borrowed from [Facebook's GAN zoo repo](https://github.com/facebookresearch/pytorch_GAN_zoo).
+This repo contains code for running DrumGAN, a Generative Adversarial Network that synthesizes drum sounds offering control over percetpual features. You can find details about the specific architecture and the experiment in our ISMIR [paper](). Some of the codes are borrowed from [Facebook's GAN zoo repo](https://github.com/facebookresearch/pytorch_GAN_zoo).
 
-# Notes
-THIS REPO IS NOT UP TO DATE YET! Please, come back later. Sorry for the inconvenience.
+This fork adds the following:
+* Updated requirements.txt
+* Updated function references in `utils.py`
+* Custom dataloader `pi_drums`
+* Documentation and comments
 
 # Install
 1) Install requirements:
@@ -13,7 +16,7 @@ pip install -r requirements.txt
 2) In order to compute the Fréchet Audio Distance (FAD) download and install google AI repo following the instructions [here](https://github.com/google-research/google-research/tree/master/frechet_audio_distance)
 
 # Extract timbral features
-To extract timbral features for your dataset, as mentioned in section 3.1.2 of the [DrumGAN paper](https://arxiv.org/pdf/2008.12073), run the following command. This will mounts the current directory `pwd` in the virtual `tmp` directory inside the AudioCommons Audio Extractor Docker image. The audio dataset folder and the output folder should be in this current directory. The output folder is also written in `tmp`, and therefore appears in the current directory.
+To extract timbral features for your dataset, as mentioned in section 3.1.2 of the [DrumGAN paper](https://arxiv.org/pdf/2008.12073), run the following command. This mounts the current directory `pwd` in the virtual `tmp` directory of AudioCommons Audio Extractor Docker image. The output folder is also written in `tmp`, and therefore appears in the current directory. The dataset folder and the output folder should be in the current directory.
 ```
 docker run -it --rm -v `pwd`:/tmp mtgupf/ac-audio-extractor:v3 -i /tmp/{audio dataset folder} -o /tmp/{output folder} -t --format json
 ```
@@ -21,7 +24,7 @@ docker run -it --rm -v `pwd`:/tmp mtgupf/ac-audio-extractor:v3 -i /tmp/{audio da
 # The dataset
 We train our model on a private, non-publicly available dataset containing 300k sounds of drum sounds equally distributed across kicks, snares and cymbals. This repo contains code for training a model on your own data. You will have to create a data loader, specific to the structure of your own dataset. 
 
-This project is organized as a package and the correct way is to run files as a module from the root directory, like such:
+The project is organized as a package and you can run files as a module from the root directory, like such:
 ```
 cd DrumGAN
 python -m data.db_extractors.default

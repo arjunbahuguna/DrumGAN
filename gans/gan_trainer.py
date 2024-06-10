@@ -432,9 +432,10 @@ class GANTrainer():
         self.loss_visualizer.publish(self.lossProfile[-1])
 
     def init_reference_eval_vectors(self, batch_size=50):
-
         self.true_ref, self.ref_labels = self.loader.get_validation_set(batch_size)
-        self.ref_labels_str = self.loader.index_to_labels(self.ref_labels, transpose=True)
+        self.ref_labels_str = self.loader.index_to_labels(self.ref_labels, calling_fx='init_reference_eval_vectors', transpose=False) 
+        rows = len(self.ref_labels_str)
+        cols = len(self.ref_labels_str[0]) if rows > 0 else 0
 
         
         if self.modelConfig.ac_gan:
@@ -454,12 +455,12 @@ class GANTrainer():
         D_fake, fake_emb = self.model.test_D(
             fake, get_labels=self.modelConfig.ac_gan, output_device='cpu')
         D_fake = self.loader.index_to_labels(
-            D_fake.detach(), transpose=True)
+            D_fake.detach(), calling_fx='test_GAN: D_fake', transpose=False)
 
         D_fake_avg, fake_avg_emb = self.model.test_D(
             fake_avg,  get_labels=self.modelConfig.ac_gan, output_device='cpu')
         D_fake_avg = self.loader.index_to_labels(
-            D_fake_avg.detach(), transpose=True)
+            D_fake_avg.detach(), calling_fx='test_GAN 2: D_fake_avg', transpose=False)
         
         # predict labels for true data
         true, _ = self.loader.get_validation_set(
@@ -467,7 +468,7 @@ class GANTrainer():
         D_true, true_emb = self.model.test_D(
             true, get_labels=self.modelConfig.ac_gan, output_device='cpu')
         D_true = self.loader.index_to_labels(
-            D_true.detach(), transpose=True)
+            D_true.detach(), calling_fx='test_GAN 3: D_true', transpose=False)
 
         return D_true, true_emb.detach(), \
                D_fake, fake_emb.detach(), \
@@ -496,17 +497,17 @@ class GANTrainer():
                     att_val_dict=self.loader.header['attributes'])
             self.cls_vis.output_path = output_dir
 
-            self.cls_vis.publish(
-                self.ref_labels_str, 
-                D_true,
-                name=f'{scale}_true',
-                title=f'scale {scale} True data')
+            # self.cls_vis.publish(
+            #     self.ref_labels_str, 
+            #     D_true,
+            #     name=f'{scale}_true',
+            #     title=f'scale {scale} True data')
             
-            self.cls_vis.publish(
-                self.ref_labels_str, 
-                D_fake,
-                name=f'{scale}_fake',
-                title=f'scale {scale} Fake data')
+            # self.cls_vis.publish(
+            #     self.ref_labels_str, 
+            #     D_fake,
+            #     name=f'{scale}_fake',
+            #     title=f'scale {scale} Fake data')
 
         if self.save_gen:
             output_dir = mkdir_in_path(iter_output_dir, 'generation')
