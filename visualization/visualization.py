@@ -25,8 +25,8 @@ from visualization.visualization_tools import confusion_matrix_plotly, plot_prf
 # # from ..metrics.maximum_mean_discrepancy import mmd
 
 # import os
+vis = visdom.Visdom(raise_exceptions=False, use_incoming_socket=False)
 
-vis = visdom.Visdom(raise_exceptions=False)
 
 
 def getVisualizer(data_type):

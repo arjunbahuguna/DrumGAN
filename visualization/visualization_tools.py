@@ -29,7 +29,8 @@ from .rainbowgram.wave_rain import wave2rain
 from .rainbowgram.rain2graph import rain2graph
 
 import visdom
-vis = visdom.Visdom()
+vis = visdom.Visdom(use_incoming_socket=False)
+
 
 
 def save_matplot_fig(filename):

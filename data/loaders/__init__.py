@@ -1,20 +1,22 @@
 # from .nsynth import NSynth
 # from .mtg_drums import MTGDrums
-from .csl_drums import CSLDrums
+#from .csl_drums import CSLDrums
 # from .youtube_pianos import YouTubePianos
 # from .sinewaves import Sinewaves
 # from .mp3towav_loader import MP3ToWAV
 from .pi_drums import PIDrums
+from .mridangam import Mridangam
 from .base_loader import SimpleLoader
 
 AVAILABLE_DATASETS = {
 	# 'nsynth': NSynth,
 	# 'mtg-drums': MTGDrums,
-	'csl-drums': CSLDrums,
+	#'csl-drums': CSLDrums,
 	# 'youtube-pianos': YouTubePianos,
 	# 'sinewaves': Sinewaves,
 	# 'mp3towav': MP3ToWAV,
     'pi-drums': PIDrums,
+	'mridangam': Mridangam,
 	'default': SimpleLoader
 }
 

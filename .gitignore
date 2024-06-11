@@ -1,5 +1,4 @@
 output-networks/*
-config_files/*
 *.pyc
 .DS_Store
 *.png
@@ -131,5 +130,4 @@ dmypy.json
 # Data
 data/dataset
 data/default_extractions
-data/pi_drums_100.zip
 output/
