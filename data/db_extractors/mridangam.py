@@ -44,12 +44,10 @@ def get_standard_format(path: str, dbname='mridangam'):
 
     description = get_base_db(dbname, __VERSION__)
     description_file = os.path.join(path, f'{dbname}.json')
-   
     if os.path.exists(description_file):
         return read_json(description_file)
    
-    root_dir = mkdir_in_path(path, f'mridangam_standardized')
-
+    root_dir = mkdir_in_path(path, f'{dbname}_standardized')
     extraction_config = os.path.join(root_dir, 'extraction_config.json')
     if os.path.exists(extraction_config):
         print("Extraction configuration exists. Loading...")
@@ -158,6 +156,7 @@ def get_standard_format(path: str, dbname='mridangam'):
     description['total_size'] = len(description['data'])
     
     # Write mridangam.json
+    
     save_json(description, description_file)
     
     return description

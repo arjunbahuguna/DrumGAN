@@ -34,7 +34,7 @@ if __name__ == "__main__":
                         type=str, dest="name", 
                         default=f"default_{datetime.now().strftime('%y_%m_%d')}")
     parser.add_argument('-d', '--dataset',type=str, dest="dataset", default=f"nsynth", 
-                        help="Dataset name. Availabel: nsynth, mtg-drums, csl-drums, youtube-pianos, pi-drums")
+                        help="Dataset name. Availabel: nsynth, mtg-drums, csl-drums, youtube-pianos, pi-drums, mridangam")
     
     parser.add_argument('-o', '--output-path', help='Output directory',
                         type=str, dest="output_path", default='output_networks')
@@ -105,7 +105,11 @@ if __name__ == "__main__":
     model_config = config["model_config"]
     for item, val in config_override.items():
         model_config[item] = val
-
+    print()
+    print()
+    print(model_config)
+    print()
+    print()
     # # data config
     # for item, val in config_override.items():
     #     data_config[item] = val
